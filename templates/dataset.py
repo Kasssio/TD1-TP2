@@ -3,11 +3,13 @@ import csv
 
 class DataSetCampanasVerdes:
     def __init__(self, archivo_csv:str):
-        ''' completar docstring '''
-        f = open(archivo_csv, encoding='utf-8')
-        campanas:list[CampanaVerde] = []
-        for linea in csv.DictReader(f, delimiter=';'):
-            print (linea)
+        '''
+        Inicializa un dataset con una lista de campanas verdes en base a un archivo csv.
+        Requiere: el nombre de un archivo de extensión csv.
+        '''
+        f = open(archivo_csv, encoding='utf-8') # Abrimos el CSV con UTF-8 para que tome los acentos
+        self.campanas:list[CampanaVerde] = []
+        for linea in csv.DictReader(f, delimiter=';'): # Lee el CSV como un conjunto de diccionarios, con las claves delimitadas por ;
             dir:str = linea['direccion']
             bar:str = linea['barrio']
             com:int = int(linea['comuna'])
@@ -16,16 +18,24 @@ class DataSetCampanasVerdes:
             lat:float = float(punto[1][1:])
             lon:float = float(punto[2][:-1])
             camp = CampanaVerde(dir, bar, com, mats, lat, lon)
-            campanas.append(camp)
-        print(campanas)
+            self.campanas.append(camp)
 
-    # def tamano(...) -> ...:
-    #     ''' completar docstring '''
-    #     pass
+    def tamano(self) -> int:
+        '''
+        Requiere: nada.
+        Devuelve: la cantidad de campanas del dataset.
+        '''
+        return len(self.campanas) #O(N)
 
-    # def barrios(...) -> ...:
-    #     ''' completar docstring '''
-    #     pass
+    def barrios(self) -> set[str]:
+        '''
+        Requiere: nada.
+        Devuelve: el conjunto de todos los barrios del dataset.
+        '''
+        barrios:set[str] = {} #NO ANDA, CORREGIR
+        for campana in self.campanas:
+            barrios.add(campana['barrio'])
+        return barrios
 
     # def campanas_del_barrio(...) -> ...:
     #     ''' completar docstring '''
@@ -46,3 +56,4 @@ class DataSetCampanasVerdes:
 # hola = 'POINT (-58.4436445327415 -34.5893377789048)'
 # print (hola.split(' ')
 dataset = DataSetCampanasVerdes('campanas-verdes.csv')
+print(dataset.barrios())
