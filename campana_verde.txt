@@ -1,0 +1,34 @@
+1. Implementar una clase CampanaVerde que modele una campana verde individual en este problema
+y las consultas que se le pueden hacer. Debe tener al menos los siguientes atributos y métodos:
+CampanaVerde(...): construye un nuevo objeto de la clase CampanaVerde, con los parámetros
+que se consideren necesarios.
+c.direccion: la dirección de la campana verde, de tipo str. Ejemplo: “AGUIRRE 1447”.
+c.barrio: el barrio donde está la campana verde, de tipo str.
+c.comuna: la comuna donde está la campana, de tipo int. Ejemplo: 15.
+c.materiales: un conjunto del tipo de materiales que se pueden depositar en la campana, de
+tipo Set[str]. Ejemplo: {'Papel', 'Cartón'}.
+c.latitud y c.longitud: las coordenadas geográficas de la campana, ambas de tipo float.
+c.distancia(lat, lng): devuelve la distancia entre la CampanaVerde y el punto ingresado
+(punto dado por la latitud y la longitud con las cuales el método fue invocado). Para saber cómo
+calcular la distancia entre dos puntos geográficos, leer la sección Cómo calcular distancias al
+final de este enunciado.
+str(e): devuelve una representación como string de la campana verde c (esto se logra definiendo
+el método __repr__), que debe incluir entre los símbolos < y >: su dirección, una
+arroba, los materiales que se pueden depositar separados por el símbolo /, otro arroba ‘y su
+barrio. Ejemplo: '<AGUIRRE 1447@Papel/Cartón@CHACARITA>'.
+
+Cómo calcular distancias:
+Para calcular distancias, debe usarse la función haversine, que recibe dos puntos geográficos y devuelve
+la distancia entre ellos. Cada punto se representa como una tupla de dos floats (latitud y longitud).
+Opcionalmente, puede indicarse la unidad de distancia, que en nuestro caso será metros. Ejemplo de uso:
+1 from haversine import haversine , Unit
+2 punto1 : tuple [float , float ] = ( -34.61315 , -58.37723)
+3 punto2 : tuple [float , float ] = ( -36.69733 , -56.68293)
+4 haversine (punto1 , punto2 , unit = Unit . METERS )
+El módulo haversine no está disponible por defecto en Python. Hay dos opciones para poder usarlo:
+(Recomendada) La opción más sencilla es copiar el archivo adjunto haversine.py en la misma
+carpeta de los archivos .py del TP.
+(Avanzada) La otra opción es instalar el módulo haversine en Python. Cómo hacer esto depende de
+la plataforma (por ejemplo, en algunas hay que ejecutar “pip3 install haversine” en la consola
+del sistema operativo). Quienes se animen a instalarlo, pueden consultar en el foro. ¡No es difícil!
+Más info acá: https://github.com/mapado/haversine
