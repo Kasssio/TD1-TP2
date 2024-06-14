@@ -4,9 +4,10 @@ import csv
 class DataSetCampanasVerdes:
     def __init__(self, archivo_csv:str):
         ''' completar docstring '''
-        f = open(archivo_csv)
+        f = open(archivo_csv, encoding='utf-8')
         campanas:list[CampanaVerde] = []
-        for linea in csv.DictReader(f):
+        for linea in csv.DictReader(f, delimiter=';'):
+            print (linea)
             dir:str = linea['direccion']
             bar:str = linea['barrio']
             com:int = int(linea['comuna'])
