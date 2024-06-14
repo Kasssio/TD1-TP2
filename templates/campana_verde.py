@@ -22,12 +22,9 @@ class CampanaVerde:
         return haversine(punto1, punto2, unit = Unit.METERS)
 
     def __repr__(self) -> str:
-        ''' completar docstring '''
-        #<AGUIRRE 1447@Papel/Cartón@CHACARITA>
-        return '<' + self.direccion + '@' + self.materiales.split(' ') + '@' + self.barrio + '>'
-        pass
+        '''  '''
+        return '<' + self.direccion + '@' + '/'.join(self.materiales) + '@' + self.barrio + '>'
 
 camp:CampanaVerde = CampanaVerde('AGUIRRE 1447', 'CHACARITA', 15, {'Papel', 'Cartón'}, -58.4436445327415, -34.5893377789048)
 print(camp)
-#AGUIRRE 1447	CHACARITA	15	Papel / CartÃ³n	Los materiales deben estar limpios y secos
-#POINT (-58.4436445327415 -34.5893377789048)
+print(camp.distancia(0,0))
