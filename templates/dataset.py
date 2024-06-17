@@ -17,7 +17,7 @@ class DataSetCampanasVerdes:
             punto:list[str] = linea['WKT'].split(' ')
             lat:float = float(punto[1][1:])
             lon:float = float(punto[2][:-1])
-            camp = CampanaVerde(dir, bar, com, mats, lat, lon)
+            camp = CampanaVerde(dir, bar, com, mats, lat, lon) # Importante que los parámetros sigan el orden de la clase
             self.campanas.append(camp)
 
     def tamano(self) -> int:
