@@ -24,3 +24,4 @@ class CampanaVerde:
 
 camp:CampanaVerde = CampanaVerde('AGUIRRE 1447', 'CHACARITA', 15, {'Papel', 'Cartón'}, -58.4436445327415, -34.5893377789048)
 print(camp)
+print(camp.distancia(-10,1000))

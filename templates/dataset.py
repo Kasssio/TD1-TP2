@@ -74,14 +74,20 @@ class DataSetCampanasVerdes:
         for campana in campanas:
             campDist[campana] = campana.distancia(lat,lon)
 
+    def exportar_por_materiales(self, archivo_csv:str, materiales:set) -> ...:
+        '''  genera un nuevo archivo con
+        nombre archivo_csv que contiene las campanas verdes en el dataset d en las que se pueda
+        depositar todos los materiales del conjunto materiales, conjunto indicado como input del
+        método. El archivo generado contiene únicamente las columnas DIRECCION y BARRIO .
+        '''
+        f = open(archivo_csv, 'w', encoding='utf-8')
+        f.write("DIRECCION;BARRIO\n")
+        for campana in self.campanas:
+            if materiales & campana.materiales == materiales:
+                f.write(campana.direccion + ";" + campana.barrio + "\n")
 
-        
-
-    # def exportar_por_materiales(...) -> ...:
-    #     ''' completar docstring '''
-    #     pass
 
 # hola = 'POINT (-58.4436445327415 -34.5893377789048)'
 # print (hola.split(' ')
-dataset = DataSetCampanasVerdes('TD1-TP2/templates/csv-test.csv')
-print(dataset.cantidad_por_barrio('Papel'))
+dataset = DataSetCampanasVerdes('templates/csv-test.csv')
+dataset.exportar_por_materiales('csv-test1.csv', {"Papel", "Cartón", "Plástico"})
