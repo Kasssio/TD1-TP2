@@ -32,22 +32,50 @@ class DataSetCampanasVerdes:
         Requiere: nada.
         Devuelve: el conjunto de todos los barrios del dataset.
         '''
-        barrios:set[str] = {} #NO ANDA, CORREGIR
-        for campana in self.campanas:
-            barrios.add(campana['barrio'])
+        barrios:set[str] = set() 
+        for campana in self.campanas: # Complejidad O(N)
+            barrios.add(campana.barrio) # Complejidad O(B), consultar por foro o profe
         return barrios
 
-    # def campanas_del_barrio(...) -> ...:
-    #     ''' completar docstring '''
-    #     pass
+    def campanas_del_barrio(self,barrio:str) -> list[CampanaVerde]:
+        ''' 
+        Requiere: nada.
+        Devuelve: La cantidad de campanas verdes en un barrio.
+        '''
+        barrio = barrio.upper()
+        vr:list[CampanaVerde] = []
+        for campana in self.campanas:
+            if campana.barrio == barrio:
+                vr.append(campana)
+        return vr
 
-    # def cantidad_por_barrio(...) -> ...:
-    #     ''' completar docstring '''
-    #     pass
+    def cantidad_por_barrio(self,material) -> dict[str,int]:
+        ''' 
+        Requiere: nada.
+        Devuelve: un diccionario con la cantidad de campanas verdes en un barrio en las que se puede depositar material.
+        '''
+        vr:dict[str,int] = {}
+        barrios = self.barrios()
+        for barrio in barrios:
+            vr[barrio] = 0
+            campanas = self.campanas_del_barrio(barrio)
+            for i in campanas:
+                if material in i.materiales:
+                    vr[barrio] += 1
+        return vr
 
-    # def tres_campanas_cercanas(...) -> ...:
-    #     ''' completar docstring '''
-    #     pass
+    def tres_campanas_cercanas(self,lat,lon) -> tuple[CampanaVerde,CampanaVerde,CampanaVerde]:
+        '''
+        Requiere: Nada.
+        Devuelve: las tres campanas más cerca de la ubicación dada.
+        '''
+        campDist:dict[CampanaVerde,float] = {}
+        campanas = self.campanas
+        for campana in campanas:
+            campDist[campana] = campana.distancia(lat,lon)
+
+
+        
 
     # def exportar_por_materiales(...) -> ...:
     #     ''' completar docstring '''
@@ -55,5 +83,5 @@ class DataSetCampanasVerdes:
 
 # hola = 'POINT (-58.4436445327415 -34.5893377789048)'
 # print (hola.split(' ')
-dataset = DataSetCampanasVerdes('campanas-verdes.csv')
-print(dataset.barrios())
+dataset = DataSetCampanasVerdes('TD1-TP2/templates/csv-test.csv')
+print(dataset.cantidad_por_barrio('Papel'))
