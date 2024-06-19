@@ -22,6 +22,11 @@ class CampanaVerde:
         ''' Devuelve una representación string de la campana verde, especificando dirección, materiales y barrio. '''
         return '<' + self.direccion + '@' + '/'.join(self.materiales) + '@' + self.barrio + '>'
 
-camp:CampanaVerde = CampanaVerde('AGUIRRE 1447', 'CHACARITA', 15, {'Papel', 'Cartón'}, -58.4436445327415, -34.5893377789048)
-print(camp)
-print(camp.distancia(-10,1000))
+# camp:CampanaVerde = CampanaVerde('AGUIRRE 1447', 'CHACARITA', 15, {'Papel', 'Cartón'}, -58.4436445327415, -34.5893377789048)
+# print(camp)
+# print(camp.distancia(-10,1000))
+
+set1:set[str] = {'hola', 'manzana', 'chau', 'bolivia', 'desembarco'}
+set2:set[str] = sorted(set1)
+print(set2)
+print(type(set2))

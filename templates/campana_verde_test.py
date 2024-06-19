@@ -28,15 +28,25 @@ camp2:CampanaVerde = CampanaVerde(dic2['direccion'], dic2['barrio'], dic2['comun
 
 class TestCampanaVerde(unittest.TestCase):
     def test_init(self):
+        # Testeando el __init__ de la primera campana
         self.assertEqual(camp1.direccion, dic1['direccion'])
         self.assertEqual(camp1.barrio, dic1['barrio'])
         self.assertEqual(camp1.comuna, dic1['comuna'])
         self.assertEqual(camp1.materiales, dic1['materiales'])
         self.assertEqual(camp1.latitud, dic1['latitud'])
         self.assertEqual(camp1.longitud, dic1['longitud'])
+        # Testeando el __init__ de la segunda campana
+        self.assertEqual(camp2.direccion, dic2['direccion'])
+        self.assertEqual(camp2.barrio, dic2['barrio'])
+        self.assertEqual(camp2.comuna, dic2['comuna'])
+        self.assertEqual(camp2.materiales, dic2['materiales'])
+        self.assertEqual(camp2.latitud, dic2['latitud'])
+        self.assertEqual(camp2.longitud, dic2['longitud'])
+
     # def test_repr(self):
     #     self.assertSetEqual(str(camp1), '<AGUIRRE 1447@Cartón/Papel@CHACARITA>')
     #     self.assertSetEqual(str(camp2), '<CASTRO 1038@Cartón/Metal/Papel/Plástico@BOEDO>')
+    # PREGUNTAR: ¿CÓMO ORDENO UN SET PARA PODER TESTEAR EL __REPR__? Porque si el set se ordena aleatoriamente cada vez que se crea, no tengo forma de igualarlo a un str y que siempre me de lo mismo.
         
     def test_distancia(self):
         self.assertEqual(camp1.distancia(0,0), 7169810.4462479055)
