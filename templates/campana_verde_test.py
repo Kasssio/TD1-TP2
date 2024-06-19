@@ -18,7 +18,7 @@ dic2:dict[str,str,int,set,float,float] = {
     'direccion' : 'CASTRO 1038',
     'barrio' : 'BOEDO',
     'comuna' : 5,
-    'materiales' : {'Papel', 'Cartón', 'Plástico', 'Metal', 'Vidrio'},
+    'materiales' : {'Papel', 'Cartón', 'Plástico', 'Metal'},
     'latitud' : -58.4203838859871, 
     'longitud' : -34.6252247608196
     }
@@ -43,16 +43,18 @@ class TestCampanaVerde(unittest.TestCase):
         self.assertEqual(camp2.latitud, dic2['latitud'])
         self.assertEqual(camp2.longitud, dic2['longitud'])
 
-    # def test_repr(self):
-    #     self.assertSetEqual(str(camp1), '<AGUIRRE 1447@Cartón/Papel@CHACARITA>')
-    #     self.assertSetEqual(str(camp2), '<CASTRO 1038@Cartón/Metal/Papel/Plástico@BOEDO>')
+    def test_repr(self):
+        self.assertEqual(str(camp1), '<AGUIRRE 1447@Cartón/Papel@CHACARITA>')
+        self.assertEqual(str(camp2), '<CASTRO 1038@Cartón/Metal/Papel/Plástico@BOEDO>')
     # PREGUNTAR: ¿CÓMO ORDENO UN SET PARA PODER TESTEAR EL __REPR__? Porque si el set se ordena aleatoriamente cada vez que se crea, no tengo forma de igualarlo a un str y que siempre me de lo mismo.
         
-    def test_distancia(self):
-        self.assertEqual(camp1.distancia(0,0), 7169810.4462479055)
-        self.assertEqual(camp1.distancia(-10,-1000), 10431466.276497768)
-        self.assertEqual(camp1.distancia(1000,10), 2815979.0121014197)
-        self.assertEqual(camp1.distancia(-10,1000), 6599505.7648359975)
+    def test_distancia(self): #Testeamos el método que nos devuelve la distancia entre una campana y una coordenada
+        self.assertEqual(camp1.distancia(0,0), 7169810.4462479055) # Probamos con el origen
+        self.assertEqual(camp1.distancia(-10,-1000), 10431466.276497768) # Probamos con dos coordenadas negativas
+        self.assertEqual(camp1.distancia(1000,10), 2815979.0121014197) # Probamos con dos coordenadas positivas
+        self.assertEqual(camp1.distancia(-10,1000), 6599505.7648359975) # Probamos con latitud negativa y longitud positiva
+        self.assertEqual(camp1.distancia(10,-1000), 12370386.1407955) # Probamos con latitud positiva y longitud negativa
+        self.assertEqual(camp1.distancia(-58.4436445327415, -34.5893377789048), 0) # Probamos con las coordenadas de la campana
 
 ## y asi con el resto de los metodos a testear.
         

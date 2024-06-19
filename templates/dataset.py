@@ -73,6 +73,7 @@ class DataSetCampanasVerdes:
         campanas = self.campanas
         for campana in campanas:
             campDist[campana] = campana.distancia(lat,lon)
+        # HACERLO CON LISTAS
 
     def exportar_por_materiales(self, archivo_csv:str, materiales:set) -> ...:
         '''  genera un nuevo archivo con
