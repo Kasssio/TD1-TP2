@@ -69,11 +69,21 @@ class DataSetCampanasVerdes:
         Requiere: Nada.
         Devuelve: las tres campanas más cerca de la ubicación dada.
         '''
-        campDist:dict[CampanaVerde,float] = {}
-        campanas = self.campanas
-        for campana in campanas:
-            campDist[campana] = campana.distancia(lat,lon)
         # HACERLO CON LISTAS
+        # Primero codifico los casos para los cuales el dataset contiene más de 3 campanas
+        # Arranco desde las 3 primeras campanas
+        camps_cerca:list[CampanaVerde] = []
+        for i in range(3):
+            camps_cerca.append(self.campanas[i])
+        # Ordeno las 3 primeras campanas
+        if (camps_cerca[0].distancia(lat,lon) > camps_cerca[1].distancia(lat,lon)):
+            camps_cerca[0], camps_cerca[1] = camps_cerca[1], camps_cerca[0]
+        if (camps_cerca[0].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
+            camps_cerca[0], camps_cerca[2] = camps_cerca[2], camps_cerca[0]
+        if (camps_cerca[1].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
+            camps_cerca[1], camps_cerca[2] = camps_cerca[2], camps_cerca[1]
+        # Ahora voy añadiendo las campanas restantes del dataset, en orden
+        # TERMINAR URGENTE
 
     def exportar_por_materiales(self, archivo_csv:str, materiales:set) -> ...:
         '''  genera un nuevo archivo con

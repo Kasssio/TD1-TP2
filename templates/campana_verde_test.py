@@ -23,8 +23,18 @@ dic2:dict[str,str,int,set,float,float] = {
     'longitud' : -34.6252247608196
     }
 
+dic3:dict[str,str,int,set,float,float] = {
+    'direccion' : 'CASTRO 1038',
+    'barrio' : 'BOEDO',
+    'comuna' : 5,
+    'materiales' : {},
+    'latitud' : -58.4203838859871, 
+    'longitud' : -34.6252247608196
+    }
+
 camp1:CampanaVerde = CampanaVerde(dic1['direccion'], dic1['barrio'], dic1['comuna'], dic1['materiales'], dic1['latitud'], dic1['longitud'])
 camp2:CampanaVerde = CampanaVerde(dic2['direccion'], dic2['barrio'], dic2['comuna'], dic2['materiales'], dic2['latitud'], dic2['longitud'])
+camp3:CampanaVerde = CampanaVerde(dic3['direccion'], dic3['barrio'], dic3['comuna'], dic3['materiales'], dic3['latitud'], dic3['longitud'])
 
 class TestCampanaVerde(unittest.TestCase):
     def test_init(self):
@@ -43,10 +53,10 @@ class TestCampanaVerde(unittest.TestCase):
         self.assertEqual(camp2.latitud, dic2['latitud'])
         self.assertEqual(camp2.longitud, dic2['longitud'])
 
-    def test_repr(self):
-        self.assertEqual(str(camp1), '<AGUIRRE 1447@Cartón/Papel@CHACARITA>')
-        self.assertEqual(str(camp2), '<CASTRO 1038@Cartón/Metal/Papel/Plástico@BOEDO>')
-    # PREGUNTAR: ¿CÓMO ORDENO UN SET PARA PODER TESTEAR EL __REPR__? Porque si el set se ordena aleatoriamente cada vez que se crea, no tengo forma de igualarlo a un str y que siempre me de lo mismo.
+    def test_repr(self): # Testeamos el método __repr__ (cómo nos muestra la campana)
+        self.assertEqual(str(camp1), '<AGUIRRE 1447@Cartón/Papel@CHACARITA>') # Pruebo con pocos materiales
+        self.assertEqual(str(camp2), '<CASTRO 1038@Cartón/Metal/Papel/Plástico@BOEDO>') # Puebo con muchos materiales
+        self.assertEqual(str(camp3), '<CASTRO 1038@@BOEDO>') # Pruebo con ningún material
         
     def test_distancia(self): #Testeamos el método que nos devuelve la distancia entre una campana y una coordenada
         self.assertEqual(camp1.distancia(0,0), 7169810.4462479055) # Probamos con el origen
