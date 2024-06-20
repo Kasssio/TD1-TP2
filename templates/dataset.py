@@ -70,13 +70,16 @@ class DataSetCampanasVerdes:
         Requiere: Nada.
         Devuelve: las tres campanas más cerca de la ubicación dada.
         '''
-        campDist:dict[float,CampanaVerde] = {}
-        for campana in self.campanas:
-            campDist[campana.distancia(lat,lon)] = campana
-        sorted(campDist)
-        lista = list(campDist.keys())
-        lista.sort()
-        print(tuple(lista[:3]))
+        # HACERLO CON LISTAS
+        # Primero codifico los casos para los cuales el dataset contiene más de 3 campanas
+        # Arranco desde las 3 primeras campanas
+        camps_cerca:list[CampanaVerde] = []
+        for i in range(3):
+            camps_cerca.append(self.campanas[i])
+        # Ordeno las 3 primeras campanas
+        for campana in self.campanas: # æ
+        # Ahora voy añadiendo las campanas restantes del dataset, en orden
+        # TERMINAR URGENTE
 
     def exportar_por_materiales(self, archivo_csv:str, materiales:set):
         '''  genera un nuevo archivo con
@@ -93,5 +96,5 @@ class DataSetCampanasVerdes:
 
 # hola = 'POINT (-58.4436445327415 -34.5893377789048)'
 # print (hola.split(' ')
-dataset = DataSetCampanasVerdes('TD1-TP2/templates/csv-test.csv')
-dataset.tres_campanas_cercanas(-58.4436445327415, -34.5893377789048)
+dataset = DataSetCampanasVerdes('templates/csv-test.csv')
+dataset.exportar_por_materiales('csv-test1.csv', {"Papel", "Cartón", "Plástico"})
