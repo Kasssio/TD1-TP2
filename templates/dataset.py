@@ -84,8 +84,6 @@ class DataSetCampanasVerdes:
             camps_cerca[1], camps_cerca[2] = camps_cerca[2], camps_cerca[1]
         # Ahora voy añadiendo las campanas restantes del dataset, en orden
         # TERMINAR URGENTE
-        for campana in self.campanas:
-            
 
     def exportar_por_materiales(self, archivo_csv:str, materiales:set) -> ...:
         '''  genera un nuevo archivo con
