@@ -58,7 +58,7 @@ class TestCampanaVerde(unittest.TestCase):
         self.assertEqual(str(camp2), '<CASTRO 1038@Cartón/Metal/Papel/Plástico@BOEDO>') # Puebo con muchos materiales
         self.assertEqual(str(camp3), '<CASTRO 1038@@BOEDO>') # Pruebo con ningún material
         
-    def test_distancia(self): #Testeamos el método que nos devuelve la distancia entre una campana y una coordenada
+    def test_distancia(self): # Testeamos el método que nos devuelve la distancia entre una campana y una coordenada
         self.assertEqual(camp1.distancia(0,0), 7169810.4462479055) # Probamos con el origen
         self.assertEqual(camp1.distancia(-10,-1000), 10431466.276497768) # Probamos con dos coordenadas negativas
         self.assertEqual(camp1.distancia(1000,10), 2815979.0121014197) # Probamos con dos coordenadas positivas
