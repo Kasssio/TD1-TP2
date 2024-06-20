@@ -20,7 +20,7 @@ class DataSetCampanasVerdes:
             camp = CampanaVerde(dir, bar, com, mats, lat, lon) # Importante que los parámetros sigan el orden de la clase
             self.campanas.append(camp)
 
-    def sortCampanas(camps_cerca:list[CampanaVerde],lat:float,lon:float): #función auxiliar
+    def ordenar_por_distancia(camps_cerca:list[CampanaVerde],lat:float,lon:float): #función auxiliar
         if (camps_cerca[0].distancia(lat,lon) > camps_cerca[1].distancia(lat,lon)):
             camps_cerca[0], camps_cerca[1] = camps_cerca[1], camps_cerca[0]
         if (camps_cerca[0].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
@@ -84,7 +84,7 @@ class DataSetCampanasVerdes:
         for i in range(3):
             camps_cerca.append(self.campanas[i])
         # Ordeno las 3 primeras campanas
-        for campana in self.campanas: # æ
+        # for campana in self.campanas: # æ
         # Ahora voy añadiendo las campanas restantes del dataset, en orden
         # TERMINAR URGENTE
 
@@ -104,4 +104,4 @@ class DataSetCampanasVerdes:
 # hola = 'POINT (-58.4436445327415 -34.5893377789048)'
 # print (hola.split(' ')
 dataset = DataSetCampanasVerdes('templates/csv-test.csv')
-dataset.exportar_por_materiales('csv-test1.csv', {"Papel", "Cartón", "Plástico"})
+print(dataset.cantidad_por_barrio('Vidrio'))
