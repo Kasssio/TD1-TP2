@@ -20,6 +20,14 @@ class DataSetCampanasVerdes:
             camp = CampanaVerde(dir, bar, com, mats, lat, lon) # Importante que los parámetros sigan el orden de la clase
             self.campanas.append(camp)
 
+    def sortCampanas(camps_cerca:list[CampanaVerde],lat:float,lon:float): #función auxiliar
+        if (camps_cerca[0].distancia(lat,lon) > camps_cerca[1].distancia(lat,lon)):
+            camps_cerca[0], camps_cerca[1] = camps_cerca[1], camps_cerca[0]
+        if (camps_cerca[0].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
+            camps_cerca[0], camps_cerca[2] = camps_cerca[2], camps_cerca[0]
+        if (camps_cerca[1].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
+            camps_cerca[1], camps_cerca[2] = camps_cerca[2], camps_cerca[1]
+
     def tamano(self) -> int:
         '''
         Requiere: nada.
@@ -76,12 +84,7 @@ class DataSetCampanasVerdes:
         for i in range(3):
             camps_cerca.append(self.campanas[i])
         # Ordeno las 3 primeras campanas
-        if (camps_cerca[0].distancia(lat,lon) > camps_cerca[1].distancia(lat,lon)):
-            camps_cerca[0], camps_cerca[1] = camps_cerca[1], camps_cerca[0]
-        if (camps_cerca[0].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
-            camps_cerca[0], camps_cerca[2] = camps_cerca[2], camps_cerca[0]
-        if (camps_cerca[1].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
-            camps_cerca[1], camps_cerca[2] = camps_cerca[2], camps_cerca[1]
+        for campana in self.campanas: # æ
         # Ahora voy añadiendo las campanas restantes del dataset, en orden
         # TERMINAR URGENTE
 
