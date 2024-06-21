@@ -29,7 +29,7 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
     
     def test_campanas_del_barrio(self):
         self.maxDiff = None
-        self.assertEqual(d1.campanas_del_barrio('BALVANERA'),...)
+        self.assertEqual(d1.campanas_del_barrio('BALVANERA'),...) # ayuda
         pass
     
     def test_cantidad_por_barrios(self): # Testeamos la función que devuelve la cantidad de campanas por barrio en las cuales se puede depositar el material especificado
