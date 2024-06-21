@@ -6,7 +6,7 @@ class CampanaVerde:
         latitud latitud y longitud longitud.
         '''
         self.direccion:str = direccion
-        self.barrio:str = barrio
+        self.barrio:str = barrio.upper()
         self.comuna:int = comuna
         self.materiales:set = materiales
         self.latitud:float = latitud

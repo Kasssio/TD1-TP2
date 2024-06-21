@@ -26,7 +26,7 @@ class DataSetCampanasVerdes:
         Requiere: nada.
         Devuelve: la cantidad de campanas del dataset.
         '''
-        return len(self.campanas) #O(N)
+        return len(self.campanas) #O(1)
 
     def barrios(self) -> set[str]:
         '''
@@ -35,7 +35,7 @@ class DataSetCampanasVerdes:
         '''
         barrios:set[str] = set() 
         for campana in self.campanas: # Complejidad O(N)
-            barrios.add(campana.barrio) # Complejidad O(B), consultar por foro o profe
+            barrios.add(campana.barrio) # Complejidad O(B)
         return barrios
 
     def campanas_del_barrio(self,barrio:str) -> list[CampanaVerde]:
@@ -43,7 +43,6 @@ class DataSetCampanasVerdes:
         Requiere: nada.
         Devuelve: La cantidad de campanas verdes en un barrio.
         '''
-        barrio = barrio.upper()
         vr:list[CampanaVerde] = []
         for campana in self.campanas:
             if campana.barrio == barrio:
@@ -73,9 +72,9 @@ class DataSetCampanasVerdes:
         campDist:dict[float,CampanaVerde] = {}
         for campana in self.campanas:
             campDist[campana.distancia(lat,lon)] = campana
-        sorted(campDist)
+        sorted(campDist) # CAMBIAR
         lista = list(campDist.keys())
-        lista.sort()
+        lista.sort() # CAMBIAR
         print(tuple(lista[:3]))
 
     def exportar_por_materiales(self, archivo_csv:str, materiales:set):
