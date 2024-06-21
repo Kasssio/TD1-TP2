@@ -40,7 +40,7 @@ class DataSetCampanasVerdes:
     def campanas_del_barrio(self,barrio:str) -> list[CampanaVerde]:
         ''' 
         Requiere: nada.
-        Devuelve: La cantidad de campanas verdes en un barrio.
+        Devuelve: Una lista que contiene todas las campanas verdes en el barrio indicado.
         '''
         vr:list[CampanaVerde] = []
         for campana in self.campanas:
@@ -58,8 +58,8 @@ class DataSetCampanasVerdes:
         for barrio in barrios:
             vr[barrio] = 0
             campanas = self.campanas_del_barrio(barrio)
-            for i in campanas:
-                if material in i.materiales:
+            for campana in campanas:
+                if material in campana.materiales:
                     vr[barrio] += 1
         return vr
     
@@ -107,5 +107,4 @@ class DataSetCampanasVerdes:
             if materiales & campana.materiales == materiales:
                 f.write(campana.direccion + ";" + campana.barrio + "\n")
 
-dataset = DataSetCampanasVerdes('templates/campanas-verdes.csv')
-dataset.tres_campanas_cercanas(-58.388208228334115, -34.610217535930296)
+dataset = DataSetCampanasVerdes('TD1-TP2/templates/campanas-verdes.csv')

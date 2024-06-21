@@ -13,7 +13,10 @@ campsBarrio1:list[CampanaVerde] = []
 
 class TestDataSetCampanasVerdes(unittest.TestCase):
 
-    def test_tamano(self): # Testeamos la función que devuelve la cantidad de camapanas de un dataset
+    def test_init(self):
+        pass
+
+    def test_tamano(self): # Testeamos la función que devuelve la cantidad de campanas de un dataset
         self.assertEqual(d1.tamano(), 121) # Probamos con tamaños chicos
         self.assertEqual(d2.tamano(), 2974) # Probamos con tamaños grandes y con líneas en blanco (este archivo tiene una línea en blanco al final)
         self.assertEqual(d3.tamano(), 0)
@@ -26,8 +29,7 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
     
     def test_campanas_del_barrio(self):
         self.maxDiff = None
-        self.assertEqual(d1.campanas_del_barrio('BALVANERA'),campsBarrio0) # Testeamos con el archivo csv-test.csv
-
+        self.assertEqual(d1.campanas_del_barrio('BALVANERA'),...)
         pass
     
     def test_cantidad_por_barrios(self): # Testeamos la función que devuelve la cantidad de campanas por barrio en las cuales se puede depositar el material especificado
