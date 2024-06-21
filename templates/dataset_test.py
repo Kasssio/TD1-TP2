@@ -7,14 +7,16 @@ from campana_verde import CampanaVerde
 d1 = DataSetCampanasVerdes('TD1-TP2/templates/csv-test.csv') # Estos tres dicts dependen de un path relativo, si no funciona durante la corrección cambiar el directorio del csv.
 d2 = DataSetCampanasVerdes('TD1-TP2/templates/campanas-verdes.csv')
 d3 = DataSetCampanasVerdes('TD1-TP2/templates/csv-test2.csv')
+d4 = DataSetCampanasVerdes('TD1-TP2/templates/init_tester.csv')
 
-campsBarrio0:list[CampanaVerde] = ['<MORENO 1889@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2037@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2277@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2415@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2679@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3015@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3219@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 1935@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2125@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2959@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 3333@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>']
-campsBarrio1:list[CampanaVerde] = []
-
+campsBarrio0:list[str] = ['<MORENO 1889@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2037@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2277@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2415@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2679@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3015@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3219@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 1935@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2125@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2959@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 3333@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>']
+campsBalvanera:list[CampanaVerde] = d1.campanas_del_barrio('BALVANERA')
+campsCerca0:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = ['<CASTILLO 1538@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>', '<CASTILLO 1748@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>', '<CASTILLO 1302@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>']
+tresCamps:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = d1.tres_campanas_cercanas(-58.4427816117563,-34.5873114041397)
 class TestDataSetCampanasVerdes(unittest.TestCase):
 
     def test_init(self):
-        pass
+        self.assertNotEqual(d4,None) # Chequeamos que el dataset se cree correctamente, es decir, que no sea None
 
     def test_tamano(self): # Testeamos la función que devuelve la cantidad de campanas de un dataset
         self.assertEqual(d1.tamano(), 121) # Probamos con tamaños chicos
@@ -29,8 +31,11 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
     
     def test_campanas_del_barrio(self):
         self.maxDiff = None
-        self.assertEqual(d1.campanas_del_barrio('BALVANERA'),...) # ayuda
-        pass
+        for i in range(len(campsBalvanera)): # Convertimos todas las campanas verdes en str para poder compararlas con campsBarrio0
+            campsBalvanera[i] = str(campsBalvanera[i])
+
+        self.assertEqual(campsBalvanera, campsBarrio0) # Probamos con campanas que estén en Balvanera
+        self.assertEqual(d1.campanas_del_barrio('MI CASA'),[]) # Probamos en pasarle un barrio que no existe en el dataset
     
     def test_cantidad_por_barrios(self): # Testeamos la función que devuelve la cantidad de campanas por barrio en las cuales se puede depositar el material especificado
         self.maxDiff = None
@@ -46,5 +51,13 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
         self.assertEqual(d3.cantidad_por_barrio('Papel'), {})
         self.assertEqual(d3.cantidad_por_barrio('Plástico'), {})
         self.assertEqual(d3.cantidad_por_barrio('Vidrio'), {})
+
+    def test_tres_campanas_cercanas(self):
+        for i in range(len(tresCamps)):
+            tresCamps[i] = str(tresCamps[i])
+        self.assertEqual(tresCamps,campsCerca0) # Probamos el funcionamiento correcto de tres_campanas_cercanas
+
+    def test_exportar_por_material(self):
+        pass
 
 unittest.main()
