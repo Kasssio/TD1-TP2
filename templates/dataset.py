@@ -10,6 +10,7 @@ class DataSetCampanasVerdes:
         f = open(archivo_csv, encoding='utf-8') # Abrimos el CSV con UTF-8 para que tome los acentos
         self.campanas:list[CampanaVerde] = []
         for linea in csv.DictReader(f, delimiter=';'): # Lee el CSV como un conjunto de diccionarios, con las claves delimitadas por ;
+            # A continuación inicializamos todas las variables
             dir:str = linea['direccion']
             bar:str = linea['barrio']
             com:int = int(linea['comuna'])
@@ -25,22 +26,22 @@ class DataSetCampanasVerdes:
         Requiere: nada.
         Devuelve: la cantidad de campanas del dataset.
         '''
-        return len(self.campanas) #O(1)
+        return len(self.campanas)
 
     def barrios(self) -> set[str]:
         '''
         Requiere: nada.
         Devuelve: el conjunto de todos los barrios del dataset.
         '''
-        barrios:set[str] = set() 
-        for campana in self.campanas: # Complejidad O(N)
-            barrios.add(campana.barrio) # Complejidad O(B)
+        barrios:set[str] = set() # Inicializo el conjunto
+        for campana in self.campanas: # Por cada campana
+            barrios.add(campana.barrio) # Añado su barrio al conjunto (no se repiten gracias a las propiedades de los conjuntos)
         return barrios
 
     def campanas_del_barrio(self,barrio:str) -> list[CampanaVerde]:
         ''' 
         Requiere: nada.
-        Devuelve: La cantidad de campanas verdes en un barrio.
+        Devuelve: una lista con las campanas verdes que hay en un barrio.
         '''
         vr:list[CampanaVerde] = []
         for campana in self.campanas:
@@ -54,11 +55,11 @@ class DataSetCampanasVerdes:
         Devuelve: un diccionario con la cantidad de campanas verdes en un barrio en las que se puede depositar material.
         '''
         vr:dict[str,int] = {}
-        barrios = self.barrios()
+        barrios = self.barrios() 
         for barrio in barrios:
             vr[barrio] = 0
             campanas = self.campanas_del_barrio(barrio)
-            for i in campanas:
+            for i in campanas: # O(N)
                 if material in i.materiales:
                     vr[barrio] += 1
         return vr
