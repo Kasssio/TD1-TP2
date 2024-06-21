@@ -20,7 +20,6 @@ class DataSetCampanasVerdes:
             camp = CampanaVerde(dir, bar, com, mats, lat, lon) # Importante que los parámetros sigan el orden de la clase
             self.campanas.append(camp)
 
-
     def tamano(self) -> int:
         '''
         Requiere: nada.
@@ -63,20 +62,47 @@ class DataSetCampanasVerdes:
                 if material in i.materiales:
                     vr[barrio] += 1
         return vr
+    
+    def ordenar_tres_campanas(self,lista:list[CampanaVerde],lat:float,lon:float):
+        '''
+        Requiere: len(lista) = 3.
+        Devuelve: una lista de 3 campanas ordenadas en base a su cercanía a una coordenada.
+        '''
+        if (lista[0].distancia(lat,lon) > lista[1].distancia(lat,lon)):
+            lista[0], lista[1] = lista[1], lista[0]
+        if (lista[0].distancia(lat,lon) > lista[2].distancia(lat,lon)):
+            lista[0], lista[2] = lista[2], lista[0]
+        if (lista[1].distancia(lat,lon) > lista[2].distancia(lat,lon)):
+            lista[1], lista[2] = lista[2], lista[1]
+    
+    def ordenar_lista_de_tres(self,campana:CampanaVerde,lista:list[CampanaVerde],lat:float,lon:float):
+        '''
+        Requiere: len(lista) = 3.
+        Devuelve: una lista de 3 campanas ordenadas en base a su cercanía a una coordenada.
+        '''
+        if (lista[0].distancia(lat,lon) > campana.distancia(lat,lon)):
+            lista[0], lista[1], lista[2] = campana, lista[0], lista[1]
+        elif (lista[1].distancia(lat,lon) > campana.distancia(lat,lon)):
+            lista[1], lista[2] = campana, lista[1]
+        elif (lista[2].distancia(lat,lon) > campana.distancia(lat,lon)):
+            lista[2] = campana
 
-    def tres_campanas_cercanas(self,lat,lon) -> tuple[CampanaVerde,CampanaVerde,CampanaVerde]:
+    def tres_campanas_cercanas(self,lat:float,lon:float) -> tuple[CampanaVerde,CampanaVerde,CampanaVerde]:
         '''
         Requiere: Nada.
         Devuelve: las tres campanas más cerca de la ubicación dada.
         '''
-        campDist:dict[float,CampanaVerde] = {}
+        camps_cerca:list[CampanaVerde] = []
+        for i in range(3):
+            camps_cerca.append(self.campanas[i])
+        self.ordenar_tres_campanas(camps_cerca, lat, lon)
         for campana in self.campanas:
-            campDist[campana.distancia(lat,lon)] = campana
-        sorted(campDist) # CAMBIAR
-        lista = list(campDist.keys())
-        lista.sort() # CAMBIAR
-        print(tuple(lista[:3]))
-
+            self.ordenar_lista_de_tres(campana, camps_cerca, lat, lon)
+        print (camps_cerca[0].distancia(lat, lon))
+        print (camps_cerca[1].distancia(lat, lon))
+        print (camps_cerca[2].distancia(lat, lon))
+        return camps_cerca
+    
     def exportar_por_materiales(self, archivo_csv:str, materiales:set):
         '''  genera un nuevo archivo con
         nombre archivo_csv que contiene las campanas verdes en el dataset d en las que se pueda
@@ -89,8 +115,5 @@ class DataSetCampanasVerdes:
             if materiales & campana.materiales == materiales:
                 f.write(campana.direccion + ";" + campana.barrio + "\n")
 
-
-# hola = 'POINT (-58.4436445327415 -34.5893377789048)'
-# print (hola.split(' ')
-dataset = DataSetCampanasVerdes('TD1-TP2/templates/csv-test.csv')
-print(dataset.campanas_del_barrio('BALVANERA'))
+dataset = DataSetCampanasVerdes('templates/campanas-verdes.csv')
+dataset.tres_campanas_cercanas(-58.388208228334115, -34.610217535930296)
