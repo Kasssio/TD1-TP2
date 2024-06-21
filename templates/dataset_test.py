@@ -2,10 +2,14 @@ import unittest
 
 # Importamos el codigo a testear.
 from dataset import DataSetCampanasVerdes
+from campana_verde import CampanaVerde
 
-d1 = DataSetCampanasVerdes('templates/csv-test.csv')
-d2 = DataSetCampanasVerdes('templates/campanas-verdes.csv')
-d3 = DataSetCampanasVerdes('templates/csv-test2.csv')
+d1 = DataSetCampanasVerdes('TD1-TP2/templates/csv-test.csv') # Estos tres dicts dependen de un path relativo, si no funciona durante la corrección cambiar el directorio del csv.
+d2 = DataSetCampanasVerdes('TD1-TP2/templates/campanas-verdes.csv')
+d3 = DataSetCampanasVerdes('TD1-TP2/templates/csv-test2.csv')
+
+campsBarrio0:list[CampanaVerde] = ['<MORENO 1889@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2037@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2277@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2415@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2679@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3015@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3219@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 1935@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2125@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2959@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 3333@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>']
+campsBarrio1:list[CampanaVerde] = []
 
 class TestDataSetCampanasVerdes(unittest.TestCase):
 
@@ -21,6 +25,9 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
         self.assertEqual(d2.barrios(), {'SAN NICOLAS', 'SAN TELMO', 'VILLA ORTUZAR', 'MONTE CASTRO', 'CABALLITO', 'VILLA SANTA RITA', 'PUERTO MADERO', 'VILLA LURO', 'NUÑEZ', 'COGHLAN', 'BELGRANO', 'VILLA DEVOTO', 'PARQUE PATRICIOS', 'AGRONOMIA', 'VILLA CRESPO', 'PARQUE AVELLANEDA', 'FLORESTA', 'MONSERRAT', 'VILLA SOLDATI', 'CHACARITA', 'VERSALLES', 'LINIERS', 'MATADEROS', 'SAAVEDRA', 'VILLA DEL PARQUE', 'FLORES', 'CONSTITUCION', 'VELEZ SARSFIELD', 'VILLA REAL', 'PALERMO', 'SAN CRISTOBAL', 'BARRACAS', 'VILLA URQUIZA', 'PATERNAL', 'COLEGIALES', 'VILLA LUGANO', 'PARQUE CHAS', 'RECOLETA', 'VILLA RIACHUELO', 'VILLA PUEYRREDON', 'PARQUE CHACABUCO', 'BALVANERA', 'BOCA', 'VILLA GENERAL MITRE', 'NUEVA POMPEYA', 'BOEDO', 'RETIRO', 'VILLA GRAL. MITRE', 'ALMAGRO'})
     
     def test_campanas_del_barrio(self):
+        self.maxDiff = None
+        self.assertEqual(d1.campanas_del_barrio('BALVANERA'),campsBarrio0) # Testeamos con el archivo csv-test.csv
+
         pass
     
     def test_cantidad_por_barrios(self): # Testeamos la función que devuelve la cantidad de campanas por barrio en las cuales se puede depositar el material especificado

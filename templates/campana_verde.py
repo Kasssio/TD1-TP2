@@ -12,7 +12,7 @@ class CampanaVerde:
         self.latitud:float = latitud
         self.longitud:float = longitud
 
-    def distancia(self, lat2:float, lon2:float) -> ...:
+    def distancia(self, lat2:float, lon2:float) -> float:
         ''' Devuelve la distancia entre la campana verde y la ubicación dada. '''
         punto1:tuple[float, float] = (self.latitud, self.longitud)
         punto2:tuple[float, float] = (lat2, lon2)
@@ -22,8 +22,7 @@ class CampanaVerde:
         ''' Devuelve una representación string de la campana verde, especificando dirección, materiales y barrio. '''
         lista = list(self.materiales)
         lista.sort()
-        return '<' + self.direccion + '@' + '/'.join(lista) + '@' + self.barrio + '>'
+        return str('<' + self.direccion + '@' + '/'.join(lista) + '@' + self.barrio + '>') # El str() es necesario para el test
 
 camp:CampanaVerde = CampanaVerde('AGUIRRE 1447', 'CHACARITA', 15, {'Papel', 'Cartón'}, -58.4436445327415, -34.5893377789048)
-# print(camp)
 print(camp.distancia(10,-1000))

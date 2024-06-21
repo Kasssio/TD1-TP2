@@ -93,4 +93,4 @@ class DataSetCampanasVerdes:
 # hola = 'POINT (-58.4436445327415 -34.5893377789048)'
 # print (hola.split(' ')
 dataset = DataSetCampanasVerdes('TD1-TP2/templates/csv-test.csv')
-dataset.tres_campanas_cercanas(-58.4436445327415, -34.5893377789048)
+print(dataset.campanas_del_barrio('BALVANERA'))
