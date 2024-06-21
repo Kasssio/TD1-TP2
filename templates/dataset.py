@@ -63,18 +63,6 @@ class DataSetCampanasVerdes:
                     vr[barrio] += 1
         return vr
     
-    def ordenar_tres_campanas(self,lista:list[CampanaVerde],lat:float,lon:float):
-        '''
-        Requiere: len(lista) = 3.
-        Devuelve: una lista de 3 campanas ordenadas en base a su cercanía a una coordenada.
-        '''
-        if (lista[0].distancia(lat,lon) > lista[1].distancia(lat,lon)):
-            lista[0], lista[1] = lista[1], lista[0]
-        if (lista[0].distancia(lat,lon) > lista[2].distancia(lat,lon)):
-            lista[0], lista[2] = lista[2], lista[0]
-        if (lista[1].distancia(lat,lon) > lista[2].distancia(lat,lon)):
-            lista[1], lista[2] = lista[2], lista[1]
-    
     def ordenar_lista_de_tres(self,campana:CampanaVerde,lista:list[CampanaVerde],lat:float,lon:float):
         '''
         Requiere: len(lista) = 3.
@@ -92,15 +80,19 @@ class DataSetCampanasVerdes:
         Requiere: Nada.
         Devuelve: las tres campanas más cerca de la ubicación dada.
         '''
+        # Armo una lista con las primeras tres campanas del dataset
         camps_cerca:list[CampanaVerde] = []
         for i in range(3):
             camps_cerca.append(self.campanas[i])
-        self.ordenar_tres_campanas(camps_cerca, lat, lon)
-        for campana in self.campanas:
+        # Ordeno la lista
+        if (camps_cerca[0].distancia(lat,lon) > camps_cerca[1].distancia(lat,lon)):
+            camps_cerca[0], camps_cerca[1] = camps_cerca[1], camps_cerca[0]
+        if (camps_cerca[0].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
+            camps_cerca[0], camps_cerca[2] = camps_cerca[2], camps_cerca[0]
+        if (camps_cerca[1].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
+            camps_cerca[1], camps_cerca[2] = camps_cerca[2], camps_cerca[1]
+        for campana in self.campanas: # Voy agregando a la lista campanas más cercanas
             self.ordenar_lista_de_tres(campana, camps_cerca, lat, lon)
-        print (camps_cerca[0].distancia(lat, lon))
-        print (camps_cerca[1].distancia(lat, lon))
-        print (camps_cerca[2].distancia(lat, lon))
         return camps_cerca
     
     def exportar_por_materiales(self, archivo_csv:str, materiales:set):
