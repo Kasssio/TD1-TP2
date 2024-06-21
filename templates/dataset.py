@@ -81,9 +81,9 @@ class DataSetCampanasVerdes:
         Devuelve: una lista de 3 campanas ordenadas en base a su cercanía a una coordenada.
         '''
         if (lista[0].distancia(lat,lon) > campana.distancia(lat,lon)):
-            lista[0] = campana
+            lista[0], lista[1], lista[2] = campana, lista[0], lista[1]
         elif (lista[1].distancia(lat,lon) > campana.distancia(lat,lon)):
-            lista[1] = campana
+            lista[1], lista[2] = campana, lista[1]
         elif (lista[2].distancia(lat,lon) > campana.distancia(lat,lon)):
             lista[2] = campana
 
@@ -98,7 +98,9 @@ class DataSetCampanasVerdes:
         self.ordenar_tres_campanas(camps_cerca, lat, lon)
         for campana in self.campanas:
             self.ordenar_lista_de_tres(campana, camps_cerca, lat, lon)
-        print(camps_cerca)
+        print (camps_cerca[0].distancia(lat, lon))
+        print (camps_cerca[1].distancia(lat, lon))
+        print (camps_cerca[2].distancia(lat, lon))
         return camps_cerca
     
     def exportar_por_materiales(self, archivo_csv:str, materiales:set):
@@ -113,9 +115,5 @@ class DataSetCampanasVerdes:
             if materiales & campana.materiales == materiales:
                 f.write(campana.direccion + ";" + campana.barrio + "\n")
 
-
-# hola = 'POINT (-58.4436445327415 -34.5893377789048)'
-# print (hola.split(' ')
-dataset = DataSetCampanasVerdes('templates/csv-test.csv')
-dataset.tres_campanas_cercanas(-58.459040823135794, -34.55018157755014)
-print(-34.55018157755014 -1)
+dataset = DataSetCampanasVerdes('templates/campanas-verdes.csv')
+dataset.tres_campanas_cercanas(-58.388208228334115, -34.610217535930296)
