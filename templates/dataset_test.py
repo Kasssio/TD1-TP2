@@ -5,9 +5,10 @@ import csv
 from dataset import DataSetCampanasVerdes
 from campana_verde import CampanaVerde
 
-d1:DataSetCampanasVerdes = DataSetCampanasVerdes('TD1-TP2/templates/csv-test.csv') # Estos tres datasets dependen de un path relativo, si no funciona durante la corrección cambiar el directorio del csv.
-d2:DataSetCampanasVerdes = DataSetCampanasVerdes('TD1-TP2/templates/campanas-verdes.csv')
-d3:DataSetCampanasVerdes = DataSetCampanasVerdes('TD1-TP2/templates/csv-vacio.csv')
+d1:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/csv-test.csv') # Estos tres datasets dependen de un path relativo, si no funciona durante la corrección cambiar el directorio del csv.
+d2:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/campanas-verdes.csv')
+d3:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/csv-vacio.csv')
+d4:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/csv-test-2c.csv')
 
 campsBalvanera:list[CampanaVerde] = d1.campanas_del_barrio('BALVANERA')
 campsBalvaneraSTR:list[str] = ['<MORENO 1889@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2037@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2277@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2415@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2679@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3015@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3219@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 1935@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2125@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2959@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 3333@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>']
@@ -61,11 +62,11 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
 
     def test_exportar_muchas_campanas(self):
         fileToRead:DataSetCampanasVerdes = d1 # Llamamos un dataset
-        fileExport:str = 'TD1-TP2/templates/csv-exporter.csv' # Este archivo es el destino de exportar_por_materiales
+        fileExport:str = 'templates/csv-exporter.csv' # Este archivo es el destino de exportar_por_materiales
         material:set[str] = {'Papel'}
         fileToRead.exportar_por_materiales(fileExport,material)
-        result:str = 'TD1-TP2/templates/csv-exporter.csv'
-        expected:str = 'TD1-TP2/templates/expected-csv.csv' # Este csv contiene los contenidos esperados del resultado
+        result:str = 'templates/csv-exporter.csv'
+        expected:str = 'templates/expected-csv.csv' # Este csv contiene los contenidos esperados del resultado
         f = open(result, encoding='utf-8') 
         g = open(expected, encoding='utf-8')
         a:str = f.read() # Pasamos los contenidos a tipo str para facilitar la comparación
@@ -76,11 +77,11 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
         
     def test_exportar_cero_campanas(self):
         fileToRead:DataSetCampanasVerdes = d1 # Llamamos un dataset 
-        fileExport:str = 'TD1-TP2/templates/csv-exporter.csv' # Este archivo es el destino de exportar_por_materiales
+        fileExport:str = 'templates/csv-exporter.csv' # Este archivo es el destino de exportar_por_materiales
         material:set[str] = {'Hola'}
         fileToRead.exportar_por_materiales(fileExport,material)
-        result:str = 'TD1-TP2/templates/csv-exporter.csv'
-        expected:str = 'TD1-TP2/templates/empty-export.csv' # Este csv está vacío, buscamos que pase esto
+        result:str = 'templates/csv-exporter.csv'
+        expected:str = 'templates/empty-export.csv' # Este csv está vacío, buscamos que pase esto
         f = open(result, encoding='utf-8') # Abrimos los dos archivos 
         g = open(expected, encoding='utf-8')
         a = f.read() # Pasamos los contenidos a tipo str para facilitar la comparación
