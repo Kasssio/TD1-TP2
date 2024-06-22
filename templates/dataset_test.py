@@ -5,15 +5,20 @@ import csv
 from dataset import DataSetCampanasVerdes
 from campana_verde import CampanaVerde
 
+# Inicializamos datasets para testear
 d1:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/csv-test.csv') # Estos tres datasets dependen de un path relativo, si no funciona durante la corrección cambiar el directorio del csv.
 d2:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/campanas-verdes.csv')
 d3:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/csv-vacio.csv')
 d4:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/csv-test-2c.csv')
+print(len(d4.campanas))
 
+# Inicializamos algunas variables que nos van a servir para testear
 campsBalvanera:list[CampanaVerde] = d1.campanas_del_barrio('BALVANERA')
 campsBalvaneraSTR:list[str] = ['<MORENO 1889@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2037@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2277@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2415@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2679@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3015@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3219@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 1935@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2125@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2959@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 3333@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>']
 campsCerca0:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = ['<CASTILLO 1538@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>', '<CASTILLO 1748@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>', '<CASTILLO 1302@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>']
-tresCamps:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = d1.tres_campanas_cercanas(-58.4427816117563,-34.5873114041397)
+tresCamps0:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = d1.tres_campanas_cercanas(-58.4427816117563,-34.5873114041397)
+campsCerca1:tuple[CampanaVerde, CampanaVerde] = ['<MENDOZA 2132@Cartón/Papel@BELGRANO>', '<REMEDIOS 3715@Cartón/Metal/Papel/Plástico/Vidrio@PARQUE AVELLANEDA>']
+tresCamps1:tuple[CampanaVerde, CampanaVerde] = d4.tres_campanas_cercanas(-58.4427816117563,-34.5873114041397)
 
 class TestDataSetCampanasVerdes(unittest.TestCase):
 
@@ -57,8 +62,12 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
 
     def test_tres_campanas_cercanas(self):
         for i in range(3):
-            tresCamps[i] = str(tresCamps[i])
-        self.assertEqual(tresCamps,campsCerca0) # Probamos el funcionamiento correcto de tres_campanas_cercanas
+            tresCamps0[i] = str(tresCamps0[i]) # Para que el intérprete no tire error, lo pasamos a string
+        for i in range(2):
+            tresCamps1[i] = str(tresCamps1[i]) # Para que el intérprete no tire error, lo pasamos a string
+        self.assertEqual(tresCamps0,campsCerca0) # Probamos el funcionamiento para un dataset de 2 campanas
+        self.assertEqual(tresCamps1, campsCerca1) # Probamos el funcionamiento para un dataset de 3 o más
+
 
     def test_exportar_muchas_campanas(self):
         fileToRead:DataSetCampanasVerdes = d1 # Llamamos un dataset
