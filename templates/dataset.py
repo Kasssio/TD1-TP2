@@ -94,13 +94,13 @@ class DataSetCampanasVerdes:
         else: # Si son 3 o más campanas
             for i in range(3): 
                 camps_cerca.append(self.campanas[i]) # Agregamos sólo las primeras 3
-                # Acá las reordenamos en base a sus distancias
-                if (camps_cerca[0].distancia(lat,lon) > camps_cerca[1].distancia(lat,lon)):
-                    camps_cerca[0], camps_cerca[1] = camps_cerca[1], camps_cerca[0]
-                if (camps_cerca[0].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
-                    camps_cerca[0], camps_cerca[2] = camps_cerca[2], camps_cerca[0]
-                if (camps_cerca[1].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
-                    camps_cerca[1], camps_cerca[2] = camps_cerca[2], camps_cerca[1]
+            # Acá las reordenamos en base a sus distancias
+            if (camps_cerca[0].distancia(lat,lon) > camps_cerca[1].distancia(lat,lon)):
+                camps_cerca[0], camps_cerca[1] = camps_cerca[1], camps_cerca[0]
+            if (camps_cerca[0].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
+                camps_cerca[0], camps_cerca[2] = camps_cerca[2], camps_cerca[0]
+            if (camps_cerca[1].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
+                camps_cerca[1], camps_cerca[2] = camps_cerca[2], camps_cerca[1]
         # Ordeno la lista
         for campana in self.campanas: # Por cada campana en el dataset
             self.ordenar_lista_de_tres(campana, camps_cerca, lat, lon) # Llamo a la función que definí antes para ordenarla dentro de la lista

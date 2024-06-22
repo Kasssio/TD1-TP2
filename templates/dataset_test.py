@@ -5,12 +5,9 @@ import csv
 from dataset import DataSetCampanasVerdes
 from campana_verde import CampanaVerde
 
-d1:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/csv-test.csv') # Estos tres dicts dependen de un path relativo, si no funciona durante la corrección cambiar el directorio del csv.
-d2:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/campanas-verdes.csv')
-d3:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/csv-test2.csv')
-
-d1.exportar_por_materiales('templates/exp_x_materiales.csv')
-d1_exp:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/exp_x_materiales.csv')
+d1:DataSetCampanasVerdes = DataSetCampanasVerdes('TD1-TP2/templates/csv-test.csv') # Estos tres dicts dependen de un path relativo, si no funciona durante la corrección cambiar el directorio del csv.
+d2:DataSetCampanasVerdes = DataSetCampanasVerdes('TD1-TP2/templates/campanas-verdes.csv')
+d3:DataSetCampanasVerdes = DataSetCampanasVerdes('TD1-TP2/templates/csv-vacio.csv')
 
 campsBarrio0:list[str] = ['<MORENO 1889@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2037@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2277@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2415@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2679@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3015@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3219@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 1935@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2125@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2959@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 3333@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>']
 campsBalvanera:list[CampanaVerde] = d1.campanas_del_barrio('BALVANERA')
@@ -18,14 +15,14 @@ campsCerca0:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = ['<CASTILLO 1538@Car
 tresCamps:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = d1.tres_campanas_cercanas(-58.4427816117563,-34.5873114041397)
 
 
-matExport = d1.exportar_por_materiales('TD1-TP2/templates/csv-exporter.csv','Papel')
-noMats = d1.exportar_por_materiales('TD1-TP2/templates/csv-exporter.csv','hola profe')
+matExport = d1.exportar_por_materiales('TD1-TP2/templates/csv-exporter.csv',{'Papel'})
+noMats = d1.exportar_por_materiales('TD1-TP2/templates/csv-exporter.csv',{'hola profe'})
 
 
 class TestDataSetCampanasVerdes(unittest.TestCase):
 
     def test_init(self):
-        self.assertNotEqual(d4,None) # Chequeamos que el dataset se cree correctamente, es decir, que no sea None
+        self.assertNotEqual(d1,None) # Chequeamos que el dataset se cree correctamente, es decir, que no sea None
 
     def test_tamano(self): # Testeamos la función que devuelve la cantidad de campanas de un dataset
         self.assertEqual(d1.tamano(), 121) # Probamos con tamaños chicos
@@ -62,7 +59,7 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
         self.assertEqual(d3.cantidad_por_barrio('Vidrio'), {})
 
     def test_tres_campanas_cercanas(self):
-        for i in range(len(tresCamps)):
+        for i in range(3):
             tresCamps[i] = str(tresCamps[i])
         self.assertEqual(tresCamps,campsCerca0) # Probamos el funcionamiento correcto de tres_campanas_cercanas
 
