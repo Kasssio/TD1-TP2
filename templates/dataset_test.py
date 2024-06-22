@@ -18,8 +18,8 @@ campsCerca0:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = ['<CASTILLO 1538@Car
 tresCamps:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = d1.tres_campanas_cercanas(-58.4427816117563,-34.5873114041397)
 
 
-matExport = d1.exportar_por_materiales('TD1-TP2/templates/csv-test.csv','Papel')
-noMats = d1.exportar_por_materiales('TD1-TP2/templates/csv-test.csv','hola profe')
+matExport = d1.exportar_por_materiales('templates/csv-test.csv','Papel')
+noMats = d1.exportar_por_materiales('templates/csv-test.csv','hola profe')
 
 
 class TestDataSetCampanasVerdes(unittest.TestCase):
@@ -67,7 +67,7 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
         self.assertEqual(tresCamps,campsCerca0) # Probamos el funcionamiento correcto de tres_campanas_cercanas
 
     def test_exportar_por_material(self):
-        f = open('TD1-TP2/templates/csv-test.csv',encoding='utf-8')
+        f = open('templates/csv-test.csv',encoding='utf-8')
         contenidos:list[dict[str, str]] = list(csv.DictReader(f, delimiter=";"))
 
 
