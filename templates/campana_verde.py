@@ -22,4 +22,4 @@ class CampanaVerde:
         ''' Devuelve una representación string de la campana verde, especificando dirección, materiales y barrio. '''
         lista = list(self.materiales)
         lista.sort()
-        return str('<' + self.direccion + '@' + '/'.join(lista) + '@' + self.barrio + '>') # El str() es necesario para el test
+        return '<' + self.direccion + '@' + '/'.join(lista) + '@' + self.barrio + '>'

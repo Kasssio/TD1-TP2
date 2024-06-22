@@ -1,18 +1,25 @@
 import unittest
+import csv
 
 # Importamos el codigo a testear.
 from dataset import DataSetCampanasVerdes
 from campana_verde import CampanaVerde
 
-d1 = DataSetCampanasVerdes('TD1-TP2/templates/csv-test.csv') # Estos tres dicts dependen de un path relativo, si no funciona durante la corrección cambiar el directorio del csv.
-d2 = DataSetCampanasVerdes('TD1-TP2/templates/campanas-verdes.csv')
-d3 = DataSetCampanasVerdes('TD1-TP2/templates/csv-test2.csv')
-d4 = DataSetCampanasVerdes('TD1-TP2/templates/init_tester.csv')
+d1:DataSetCampanasVerdes = DataSetCampanasVerdes('TD1-TP2/templates/csv-test.csv') # Estos tres dicts dependen de un path relativo, si no funciona durante la corrección cambiar el directorio del csv.
+d2:DataSetCampanasVerdes = DataSetCampanasVerdes('TD1-TP2/templates/campanas-verdes.csv')
+d3:DataSetCampanasVerdes = DataSetCampanasVerdes('TD1-TP2/templates/csv-vacio.csv')
+d4:DataSetCampanasVerdes = DataSetCampanasVerdes('TD1-TP2/templates/init_tester.csv')
 
 campsBarrio0:list[str] = ['<MORENO 1889@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2037@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2277@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2415@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2679@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3015@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3219@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 1935@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2125@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2959@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 3333@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>']
 campsBalvanera:list[CampanaVerde] = d1.campanas_del_barrio('BALVANERA')
 campsCerca0:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = ['<CASTILLO 1538@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>', '<CASTILLO 1748@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>', '<CASTILLO 1302@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>']
 tresCamps:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = d1.tres_campanas_cercanas(-58.4427816117563,-34.5873114041397)
+
+
+matExport = d1.exportar_por_materiales('TD1-TP2/templates/csv-test.csv','Papel')
+noMats = d1.exportar_por_materiales('TD1-TP2/templates/csv-test.csv','hola profe')
+
+
 class TestDataSetCampanasVerdes(unittest.TestCase):
 
     def test_init(self):
@@ -58,6 +65,11 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
         self.assertEqual(tresCamps,campsCerca0) # Probamos el funcionamiento correcto de tres_campanas_cercanas
 
     def test_exportar_por_material(self):
+        f = open('TD1-TP2/templates/csv-test.csv',encoding='utf-8')
+        contenidos:list[dict[str, str]] = list(csv.DictReader(f, delimiter=";"))
+
+
+        self.assertEqual() # Probamos con un material que esté en las campanas del dataset
         pass
 
 unittest.main()
