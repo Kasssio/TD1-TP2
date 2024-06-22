@@ -4,9 +4,12 @@ import unittest
 from dataset import DataSetCampanasVerdes
 from campana_verde import CampanaVerde
 
-d1 = DataSetCampanasVerdes('TD1-TP2/templates/csv-test.csv') # Estos tres dicts dependen de un path relativo, si no funciona durante la corrección cambiar el directorio del csv.
-d2 = DataSetCampanasVerdes('TD1-TP2/templates/campanas-verdes.csv')
-d3 = DataSetCampanasVerdes('TD1-TP2/templates/csv-test2.csv')
+d1:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/csv-test.csv') # Estos tres dicts dependen de un path relativo, si no funciona durante la corrección cambiar el directorio del csv.
+d2:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/campanas-verdes.csv')
+d3:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/csv-test2.csv')
+
+d1.exportar_por_materiales('templates/exp_x_materiales.csv')
+d1_exp:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/exp_x_materiales.csv')
 
 campsBarrio0:list[CampanaVerde] = ['<MORENO 1889@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2037@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2277@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2415@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2679@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3015@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3219@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 1935@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2125@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2959@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 3333@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>']
 campsBarrio1:list[CampanaVerde] = []
@@ -26,7 +29,7 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
     
     def test_campanas_del_barrio(self):
         self.maxDiff = None
-        self.assertEqual(d1.campanas_del_barrio('BALVANERA'),campsBarrio0) # Testeamos con el archivo csv-test.csv
+        self.assertEqual(str(d1.campanas_del_barrio('BALVANERA')), campsBarrio0) # Testeamos con el archivo csv-test.csv
 
         pass
     
@@ -44,5 +47,30 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
         self.assertEqual(d3.cantidad_por_barrio('Papel'), {})
         self.assertEqual(d3.cantidad_por_barrio('Plástico'), {})
         self.assertEqual(d3.cantidad_por_barrio('Vidrio'), {})
+
+    # Exportar por un material que no se puede depositar en ninguna CampanaVerde
+    def test_export_vacio(self):
+        dataset:DataSetCampanasVerdes = DataSetCampanasVerdes("./dataset_test_files/varias_campanas_iguales.csv")
+        dataset.exportar_por_materiales("test", {"Legos"})
+        f = open("test.csv", encoding='UTF-8')
+        output:list[dict[str, str]] = list(csv.DictReader(f, delimiter=";"))
+        f.close()
+        expected_output:list[dict[str, str]] = []
+        self.assertEqual(output, expected_output)
+
+    # Exportar por un material que tengan todas las CampanaVerde
+    def test_todas(self):
+        dataset:DataSetCampanasVerdes = DataSetCampanasVerdes("./dataset_test_files/varias_campanas_iguales.csv")
+        dataset.exportar_por_materiales("test", {"Papel"})
+        f = open("test.csv", encoding='UTF-8')
+        output:list[dict[str, str]] = list(csv.DictReader(f, delimiter=";"))
+        f.close()
+        expected_data:dict[str, str] = {"DIRECCION": "DIR", "BARRIO": "BAR"}
+        expected_output:list[dict[str, str]] = [expected_data, expected_data, expected_data]
+        self.assertEqual(output, expected_output)
+
+    def test_exportar_por_materiales(self):
+
+        pass
 
 unittest.main()

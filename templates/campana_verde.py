@@ -23,6 +23,6 @@ class CampanaVerde:
         lista = list(self.materiales)
         lista.sort()
         return str('<' + self.direccion + '@' + '/'.join(lista) + '@' + self.barrio + '>') # El str() es necesario para el test
-
-camp:CampanaVerde = CampanaVerde('AGUIRRE 1447', 'CHACARITA', 15, {'Papel', 'Cartón'}, -58.4436445327415, -34.5893377789048)
-print(camp.distancia(10,-1000))
+    
+    def __str__(self) -> str:
+        return CampanaVerde

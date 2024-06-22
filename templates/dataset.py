@@ -82,17 +82,25 @@ class DataSetCampanasVerdes:
         Requiere: Nada.
         Devuelve: las tres campanas más cerca de la ubicación dada.
         '''
-        # Armo una lista con las primeras tres campanas del dataset
+        # Armo una lista con las primeras tres (o menos) campanas del dataset
         camps_cerca:list[CampanaVerde] = []
-        for i in range(3):
-            camps_cerca.append(self.campanas[i])
+        if len(self.campanas) < 3: # Si el dataset tiene menos de 3 campanas
+            for i in range(len(self.campanas)): #Por cada campana
+                camps_cerca.append(self.campanas[i]) # Las añado a la lista auxiliar
+            if len(self.campanas) == 2: # Si son exactamente 2 campanas
+                if (camps_cerca[0].distancia(lat,lon) > camps_cerca[1].distancia(lat,lon)): # Si la primera está más ñejos que la segunda
+                    camps_cerca[0], camps_cerca[1] = camps_cerca[1], camps_cerca[0] # Intercambia las posiciones
+        else: # Si son 3 o más campanas
+            for i in range(3): 
+                camps_cerca.append(self.campanas[i]) # Agregamos sólo las primeras 3
+                # Acá las reordenamos en base a sus distancias
+                if (camps_cerca[0].distancia(lat,lon) > camps_cerca[1].distancia(lat,lon)):
+                    camps_cerca[0], camps_cerca[1] = camps_cerca[1], camps_cerca[0]
+                if (camps_cerca[0].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
+                    camps_cerca[0], camps_cerca[2] = camps_cerca[2], camps_cerca[0]
+                if (camps_cerca[1].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
+                    camps_cerca[1], camps_cerca[2] = camps_cerca[2], camps_cerca[1]
         # Ordeno la lista
-        if (camps_cerca[0].distancia(lat,lon) > camps_cerca[1].distancia(lat,lon)):
-            camps_cerca[0], camps_cerca[1] = camps_cerca[1], camps_cerca[0]
-        if (camps_cerca[0].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
-            camps_cerca[0], camps_cerca[2] = camps_cerca[2], camps_cerca[0]
-        if (camps_cerca[1].distancia(lat,lon) > camps_cerca[2].distancia(lat,lon)):
-            camps_cerca[1], camps_cerca[2] = camps_cerca[2], camps_cerca[1]
         for campana in self.campanas: # Por cada campana en el dataset
             self.ordenar_lista_de_tres(campana, camps_cerca, lat, lon) # Llamo a la función que definí antes para ordenarla dentro de la lista
         return camps_cerca # Devuelve las campanas cercanas
@@ -108,6 +116,3 @@ class DataSetCampanasVerdes:
         for campana in self.campanas: # Por cada campana del dataset
             if materiales & campana.materiales == materiales: # Si en esa campana se pueden tirar todos los materiales especificados
                 f.write(campana.direccion + ";" + campana.barrio + "\n") # La añadimos al archivo
-
-dataset = DataSetCampanasVerdes('templates/campanas-verdes.csv')
-dataset.tres_campanas_cercanas(-58.388208228334115, -34.610217535930296)
