@@ -20,6 +20,6 @@ class CampanaVerde:
 
     def __repr__(self) -> str:
         ''' Devuelve una representación string de la campana verde, especificando dirección, materiales y barrio. '''
-        lista = list(self.materiales)
+        lista:list[set[str]] = list(self.materiales)
         lista.sort()
         return str('<' + self.direccion + '@' + '/'.join(lista) + '@' + self.barrio + '>') # El str() es necesario para el test

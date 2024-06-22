@@ -118,6 +118,6 @@ class DataSetCampanasVerdes:
             if materiales & campana.materiales == materiales: # Si en esa campana se pueden tirar todos los materiales especificados
                 f.write(campana.direccion + ";" + campana.barrio + "\n") # La añadimos al archivo
         f.close() # cerramos el archivo
-dataset = DataSetCampanasVerdes('TD1-TP2/templates/csv-test.csv')
-print(dataset.tres_campanas_cercanas(-58.4427816117563,-34.5873114041397))
+
+
 
