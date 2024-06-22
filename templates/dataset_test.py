@@ -1,4 +1,5 @@
 import unittest
+import csv
 
 # Importamos el codigo a testear.
 from dataset import DataSetCampanasVerdes
@@ -15,6 +16,12 @@ campsBarrio0:list[str] = ['<MORENO 1889@Cartón/Metal/Papel/Plástico/Vidrio@BAL
 campsBalvanera:list[CampanaVerde] = d1.campanas_del_barrio('BALVANERA')
 campsCerca0:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = ['<CASTILLO 1538@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>', '<CASTILLO 1748@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>', '<CASTILLO 1302@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>']
 tresCamps:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = d1.tres_campanas_cercanas(-58.4427816117563,-34.5873114041397)
+
+
+matExport = d1.exportar_por_materiales('TD1-TP2/templates/csv-test.csv','Papel')
+noMats = d1.exportar_por_materiales('TD1-TP2/templates/csv-test.csv','hola profe')
+
+
 class TestDataSetCampanasVerdes(unittest.TestCase):
 
     def test_init(self):
@@ -60,6 +67,11 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
         self.assertEqual(tresCamps,campsCerca0) # Probamos el funcionamiento correcto de tres_campanas_cercanas
 
     def test_exportar_por_material(self):
+        f = open('TD1-TP2/templates/csv-test.csv',encoding='utf-8')
+        contenidos:list[dict[str, str]] = list(csv.DictReader(f, delimiter=";"))
+
+
+        self.assertEqual() # Probamos con un material que esté en las campanas del dataset
         pass
 
 unittest.main()
