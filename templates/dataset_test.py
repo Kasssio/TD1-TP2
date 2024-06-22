@@ -5,12 +5,9 @@ import csv
 from dataset import DataSetCampanasVerdes
 from campana_verde import CampanaVerde
 
-d1:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/csv-test.csv') # Estos tres dicts dependen de un path relativo, si no funciona durante la corrección cambiar el directorio del csv.
-d2:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/campanas-verdes.csv')
-d3:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/csv-test2.csv')
-
-d1.exportar_por_materiales('templates/exp_x_materiales.csv')
-d1_exp:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/exp_x_materiales.csv')
+d1:DataSetCampanasVerdes = DataSetCampanasVerdes('TD1-TP2/templates/csv-test.csv') # Estos tres dicts dependen de un path relativo, si no funciona durante la corrección cambiar el directorio del csv.
+d2:DataSetCampanasVerdes = DataSetCampanasVerdes('TD1-TP2/templates/campanas-verdes.csv')
+d3:DataSetCampanasVerdes = DataSetCampanasVerdes('TD1-TP2/templates/csv-vacio.csv')
 
 campsBarrio0:list[str] = ['<MORENO 1889@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2037@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2277@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2415@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2679@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3015@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3219@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 1935@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2125@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2959@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 3333@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>']
 campsBalvanera:list[CampanaVerde] = d1.campanas_del_barrio('BALVANERA')
@@ -18,14 +15,11 @@ campsCerca0:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = ['<CASTILLO 1538@Car
 tresCamps:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = d1.tres_campanas_cercanas(-58.4427816117563,-34.5873114041397)
 
 
-matExport = d1.exportar_por_materiales('templates/csv-test.csv','Papel')
-noMats = d1.exportar_por_materiales('templates/csv-test.csv','hola profe')
-
 
 class TestDataSetCampanasVerdes(unittest.TestCase):
 
     def test_init(self):
-        self.assertNotEqual(d4,None) # Chequeamos que el dataset se cree correctamente, es decir, que no sea None
+        self.assertNotEqual(d1,None) # Chequeamos que el dataset se cree correctamente, es decir, que no sea None
 
     def test_tamano(self): # Testeamos la función que devuelve la cantidad de campanas de un dataset
         self.assertEqual(d1.tamano(), 121) # Probamos con tamaños chicos
@@ -62,16 +56,37 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
         self.assertEqual(d3.cantidad_por_barrio('Vidrio'), {})
 
     def test_tres_campanas_cercanas(self):
-        for i in range(len(tresCamps)):
+        for i in range(3):
             tresCamps[i] = str(tresCamps[i])
         self.assertEqual(tresCamps,campsCerca0) # Probamos el funcionamiento correcto de tres_campanas_cercanas
 
-    def test_exportar_por_material(self):
-        f = open('templates/csv-test.csv',encoding='utf-8')
-        contenidos:list[dict[str, str]] = list(csv.DictReader(f, delimiter=";"))
-
-
-        self.assertEqual() # Probamos con un material que esté en las campanas del dataset
-        pass
-
+    def test_exportar_campanas(self):
+        fileToRead = d1
+        fileExport = 'TD1-TP2/templates/csv-exporter.csv'
+        material = {'Papel'}
+        fileToRead.exportar_por_materiales(fileExport,material)
+        result = 'TD1-TP2/templates/csv-exporter.csv'
+        expected = 'TD1-TP2/templates/expected-csv.csv'
+        f = open(result, encoding='utf-8') 
+        g = open(expected, encoding='utf-8')
+        a = f.read() # Pasamos los contenidos a tipo str para facilitar la comparación
+        b = g.read()
+        self.assertEqual(a,b)
+        f.close()
+        g.close()
+        
+    def test_exportar_cero_campanas(self):
+        fileToRead = d1
+        fileExport = 'TD1-TP2/templates/csv-exporter.csv'
+        material = {'Hola'}
+        fileToRead.exportar_por_materiales(fileExport,material)
+        result = 'TD1-TP2/templates/csv-exporter.csv'
+        expected = 'TD1-TP2/templates/empty-export.csv' # Este csv está vacío
+        f = open(result, encoding='utf-8') 
+        g = open(expected, encoding='utf-8')
+        a = f.read() # Pasamos los contenidos a tipo str para facilitar la comparación
+        b = g.read()
+        self.assertEqual(a,b)
+        f.close()
+        g.close()
 unittest.main()
