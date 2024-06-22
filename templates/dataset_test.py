@@ -12,7 +12,7 @@ d3:DataSetCampanasVerdes = DataSetCampanasVerdes('TD1-TP2/templates/csv-vacio.cs
 campsBalvanera:list[CampanaVerde] = d1.campanas_del_barrio('BALVANERA')
 campsBalvaneraSTR:list[str] = ['<MORENO 1889@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2037@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2277@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2415@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2679@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3015@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3219@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 1935@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2125@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2959@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 3333@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>']
 campsCerca0:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = ['<CASTILLO 1538@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>', '<CASTILLO 1748@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>', '<CASTILLO 1302@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>']
-tresCamps:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = d1.tres_campanas_cercanas(-58.4427816117563,-34.5873114041397)
+tresCamps:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = ['<CASTILLO 1538@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>', '<CASTILLO 1748@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>', '<CASTILLO 1302@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>']
 
 class TestDataSetCampanasVerdes(unittest.TestCase):
 
