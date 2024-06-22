@@ -62,21 +62,33 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
             tresCamps[i] = str(tresCamps[i])
         self.assertEqual(tresCamps,campsCerca0) # Probamos el funcionamiento correcto de tres_campanas_cercanas
 
-    
-
     def test_exportar_campanas(self):
         fileToRead = d1
         fileExport = 'TD1-TP2/templates/csv-exporter.csv'
-        materialCero = {'Papel'}
-        fileToRead.exportar_por_materiales(fileExport,materialCero)
+        material = {'Papel'}
+        fileToRead.exportar_por_materiales(fileExport,material)
         result = 'TD1-TP2/templates/csv-exporter.csv'
         expected = 'TD1-TP2/templates/expected-csv.csv'
         f = open(result, encoding='utf-8') 
         g = open(expected, encoding='utf-8')
-        a = f.read()
+        a = f.read() # Pasamos los contenidos a tipo str para facilitar la comparación
         b = g.read()
         self.assertEqual(a,b)
         f.close()
         g.close()
         
+    def test_exportar_cero_campanas(self):
+        fileToRead = d1
+        fileExport = 'TD1-TP2/templates/csv-exporter.csv'
+        material = {'Hola'}
+        fileToRead.exportar_por_materiales(fileExport,material)
+        result = 'TD1-TP2/templates/csv-exporter.csv'
+        expected = 'TD1-TP2/templates/empty-export.csv' # Este csv está vacío
+        f = open(result, encoding='utf-8') 
+        g = open(expected, encoding='utf-8')
+        a = f.read() # Pasamos los contenidos a tipo str para facilitar la comparación
+        b = g.read()
+        self.assertEqual(a,b)
+        f.close()
+        g.close()
 unittest.main()
