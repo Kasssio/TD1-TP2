@@ -65,7 +65,4 @@ class TestCampanaVerde(unittest.TestCase):
         self.assertEqual(camp1.distancia(10,-1000), 12370386.1407955) # Probamos con latitud positiva y longitud negativa
         self.assertEqual(camp1.distancia(-58.4436445327415, -34.5893377789048), 0) # Probamos con las coordenadas de la campana
 
-        
-####################################################################
-
 unittest.main()

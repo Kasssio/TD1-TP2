@@ -23,6 +23,7 @@ class CampanaVerde:
         lista = list(self.materiales)
         lista.sort()
         return str('<' + self.direccion + '@' + '/'.join(lista) + '@' + self.barrio + '>') # El str() es necesario para el test
+
     
     def __str__(self) -> str:
         return CampanaVerde

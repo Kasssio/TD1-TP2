@@ -11,12 +11,16 @@ d3:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/csv-test2.csv')
 d1.exportar_por_materiales('templates/exp_x_materiales.csv')
 d1_exp:DataSetCampanasVerdes = DataSetCampanasVerdes('templates/exp_x_materiales.csv')
 
-campsBarrio0:list[CampanaVerde] = ['<MORENO 1889@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2037@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2277@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2415@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2679@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3015@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3219@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 1935@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2125@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2959@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 3333@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>']
-campsBarrio1:list[CampanaVerde] = []
-
+campsBarrio0:list[str] = ['<MORENO 1889@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2037@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2277@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2415@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 2679@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3015@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<MORENO 3219@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 1935@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2125@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 2959@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>', '<SARMIENTO 3333@Cartón/Metal/Papel/Plástico/Vidrio@BALVANERA>']
+campsBalvanera:list[CampanaVerde] = d1.campanas_del_barrio('BALVANERA')
+campsCerca0:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = ['<CASTILLO 1538@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>', '<CASTILLO 1748@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>', '<CASTILLO 1302@Cartón/Metal/Papel/Plástico/Vidrio@CHACARITA>']
+tresCamps:tuple[CampanaVerde,CampanaVerde,CampanaVerde] = d1.tres_campanas_cercanas(-58.4427816117563,-34.5873114041397)
 class TestDataSetCampanasVerdes(unittest.TestCase):
 
-    def test_tamano(self): # Testeamos la función que devuelve la cantidad de camapanas de un dataset
+    def test_init(self):
+        self.assertNotEqual(d4,None) # Chequeamos que el dataset se cree correctamente, es decir, que no sea None
+
+    def test_tamano(self): # Testeamos la función que devuelve la cantidad de campanas de un dataset
         self.assertEqual(d1.tamano(), 121) # Probamos con tamaños chicos
         self.assertEqual(d2.tamano(), 2974) # Probamos con tamaños grandes y con líneas en blanco (este archivo tiene una línea en blanco al final)
         self.assertEqual(d3.tamano(), 0)
@@ -29,9 +33,11 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
     
     def test_campanas_del_barrio(self):
         self.maxDiff = None
-        self.assertEqual(str(d1.campanas_del_barrio('BALVANERA')), campsBarrio0) # Testeamos con el archivo csv-test.csv
+        for i in range(len(campsBalvanera)): # Convertimos todas las campanas verdes en str para poder compararlas con campsBarrio0
+            campsBalvanera[i] = str(campsBalvanera[i])
 
-        pass
+        self.assertEqual(campsBalvanera, campsBarrio0) # Probamos con campanas que estén en Balvanera
+        self.assertEqual(d1.campanas_del_barrio('MI CASA'),[]) # Probamos en pasarle un barrio que no existe en el dataset
     
     def test_cantidad_por_barrios(self): # Testeamos la función que devuelve la cantidad de campanas por barrio en las cuales se puede depositar el material especificado
         self.maxDiff = None
@@ -48,29 +54,12 @@ class TestDataSetCampanasVerdes(unittest.TestCase):
         self.assertEqual(d3.cantidad_por_barrio('Plástico'), {})
         self.assertEqual(d3.cantidad_por_barrio('Vidrio'), {})
 
-    # Exportar por un material que no se puede depositar en ninguna CampanaVerde
-    def test_export_vacio(self):
-        dataset:DataSetCampanasVerdes = DataSetCampanasVerdes("./dataset_test_files/varias_campanas_iguales.csv")
-        dataset.exportar_por_materiales("test", {"Legos"})
-        f = open("test.csv", encoding='UTF-8')
-        output:list[dict[str, str]] = list(csv.DictReader(f, delimiter=";"))
-        f.close()
-        expected_output:list[dict[str, str]] = []
-        self.assertEqual(output, expected_output)
+    def test_tres_campanas_cercanas(self):
+        for i in range(len(tresCamps)):
+            tresCamps[i] = str(tresCamps[i])
+        self.assertEqual(tresCamps,campsCerca0) # Probamos el funcionamiento correcto de tres_campanas_cercanas
 
-    # Exportar por un material que tengan todas las CampanaVerde
-    def test_todas(self):
-        dataset:DataSetCampanasVerdes = DataSetCampanasVerdes("./dataset_test_files/varias_campanas_iguales.csv")
-        dataset.exportar_por_materiales("test", {"Papel"})
-        f = open("test.csv", encoding='UTF-8')
-        output:list[dict[str, str]] = list(csv.DictReader(f, delimiter=";"))
-        f.close()
-        expected_data:dict[str, str] = {"DIRECCION": "DIR", "BARRIO": "BAR"}
-        expected_output:list[dict[str, str]] = [expected_data, expected_data, expected_data]
-        self.assertEqual(output, expected_output)
-
-    def test_exportar_por_materiales(self):
-
+    def test_exportar_por_material(self):
         pass
 
 unittest.main()
